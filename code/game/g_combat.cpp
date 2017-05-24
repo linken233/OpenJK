@@ -3808,7 +3808,7 @@ extern void RunEmplacedWeapon( gentity_t *ent, usercmd_t **ucmd );
 			RunEmplacedWeapon( self, &ad_cmd );
 			//self->owner = old;
 		}
-		if ( self->client->NPC_class == CLASS_BOBAFETT
+		if (self->client->NPC_class == CLASS_BOBAFETT || self->client->NPC_class == CLASS_MANDALORIAN
 			|| self->client->NPC_class == CLASS_ROCKETTROOPER )
 		{
 			if ( self->client->moveType == MT_FLYSWIM )
@@ -5445,6 +5445,7 @@ qboolean G_ImmuneToGas( gentity_t *ent )
 		|| ent->client->NPC_class == CLASS_SWAMPTROOPER
 		|| ent->client->NPC_class == CLASS_TUSKEN
 		|| ent->client->NPC_class == CLASS_BOBAFETT
+		|| ent->client->NPC_class == CLASS_MANDALORIAN
 		|| ent->client->NPC_class == CLASS_ROCKETTROOPER
 		|| ent->client->NPC_class == CLASS_SABER_DROID
 		|| ent->client->NPC_class == CLASS_ASSASSIN_DROID
@@ -6704,7 +6705,7 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker, const
 
 		if ( targ->health > 0 && targ->NPC && targ->NPC->surrenderTime > level.time )
 		{//he was surrendering, goes down with one hit
-			if (!targ->client || targ->client->NPC_class!=CLASS_BOBAFETT)
+			if (!targ->client || (targ->client->NPC_class != CLASS_BOBAFETT && targ->client->NPC_class != CLASS_MANDALORIAN))
 			{
 				targ->health = 0;
 			}
