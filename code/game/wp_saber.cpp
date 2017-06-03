@@ -864,7 +864,7 @@ int WP_SaberInitBladeData( gentity_t *ent )
 					{//longer saber
 						ent->client->ps.saber[saberNum].blade[bladeNum].lengthMax = 48;
 					}
-					else if ( ent->client->NPC_class == CLASS_REBORN )
+					else if ( ent->client->NPC_class == CLASS_REBORN || ent->client->NPC_class == CLASS_CLONETROOPER)
 					{//shorter saber
 						ent->client->ps.saber[saberNum].blade[bladeNum].lengthMax = 32;
 					}
@@ -7460,7 +7460,7 @@ void WP_SaberStartMissileBlockCheck( gentity_t *self, usercmd_t *ucmd  )
 		}
 	}
 
-	if ( (self->client->NPC_class != CLASS_BOBAFETT && self->client->NPC_class != CLASS_MANDALORIAN)
+	if ( (self->client->NPC_class != CLASS_BOBAFETT && self->client->NPC_class != CLASS_MANDALORIAN && self->client->NPC_class != CLASS_CLONETROOPER)
 		&& (self->client->NPC_class != CLASS_REBORN || self->s.weapon == WP_SABER)
 		&& (self->client->NPC_class != CLASS_ROCKETTROOPER||!self->NPC||self->NPC->rank<RANK_LT)//if a rockettrooper, but not an officer, do these normal checks
 		)
@@ -7806,7 +7806,7 @@ void WP_SaberStartMissileBlockCheck( gentity_t *self, usercmd_t *ucmd  )
 			else if ( self->client->NPC_class != CLASS_ROCKETTROOPER
 				&& Jedi_SaberBlockGo( self, &self->NPC->last_ucmd, NULL, NULL, incoming ) != EVASION_NONE )
 			{//make sure to turn on your saber if it's not on
-				if ( (self->client->NPC_class != CLASS_BOBAFETT && self->client->NPC_class != CLASS_MANDALORIAN)
+				if ( (self->client->NPC_class != CLASS_BOBAFETT && self->client->NPC_class != CLASS_MANDALORIAN && self->client->NPC_class != CLASS_CLONETROOPER)
 					&& (self->client->NPC_class != CLASS_REBORN || self->s.weapon == WP_SABER) )
 				{
 					self->client->ps.SaberActivate();
@@ -10413,7 +10413,7 @@ void ForceTelepathy( gentity_t *self )
 				traceEnt->NPC->controlledTime = level.time + 30000;
 			}
 			else if ( traceEnt->s.weapon != WP_SABER
-				&& traceEnt->client->NPC_class != CLASS_REBORN )
+				&& traceEnt->client->NPC_class != CLASS_REBORN && traceEnt->client->NPC_class != CLASS_CLONETROOPER)
 			{//haha!  Jedi aren't easily confused!
 				if ( self->client->ps.forcePowerLevel[FP_TELEPATHY] > FORCE_LEVEL_2
 					&& traceEnt->s.weapon != WP_NONE		//don't charm people who aren't capable of fighting... like ugnaughts and droids, just confuse them

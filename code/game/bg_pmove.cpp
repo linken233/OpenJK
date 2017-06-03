@@ -3832,7 +3832,7 @@ static qboolean PM_TryRoll( void )
 				if ( !pm->gent
 					|| !pm->gent->client
 					|| (pm->gent->client->NPC_class != CLASS_BOBAFETT //boba can roll with it, baby
-						&& pm->gent->client->NPC_class != CLASS_REBORN //reborn using weapons other than saber can still roll
+						&& pm->gent->client->NPC_class != CLASS_REBORN && pm->gent->client->NPC_class != CLASS_CLONETROOPER //reborn using weapons other than saber can still roll
 					))
 				{//can't roll
 					return qfalse;
