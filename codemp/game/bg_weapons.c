@@ -380,7 +380,7 @@ weaponData_t weaponData[WP_NUM_WEAPONS] =
 	},
 	{	// WP_CLONECARBINE,
 	//		"DC-15 Carbine",			//	char	classname[32];		// Spawning name
-	  AMMO_BLASTER,			//	int		ammoIndex;			// Index to proper ammo slot
+	  AMMO_METAL_BOLTS,			//	int		ammoIndex;			// Index to proper ammo slot
 	  5,						//	int		ammoLow;			// Count when ammo is low
 	  2,						//	int		energyPerShot;		// Amount of energy used per shot
 	  350,					//	int		fireTime;			// Amount of time between firings
