@@ -1925,10 +1925,6 @@ void NPC_RunBehavior( int team, int bState )
 			}
 		}
 	}
-	else if (NPC->client->NPC_class == CLASS_CLONETROOPER)
-	{
-		NPC_BehaviorSet_Jedi(bState);
-	}
 	else if ( NPC->client->NPC_class == CLASS_ROCKETTROOPER )
 	{//bounty hunter
 		if ( RT_Flying( NPC ) || NPC->enemy != NULL )
