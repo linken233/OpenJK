@@ -7096,7 +7096,7 @@ if (cg_SFXSabers.integer == 0)
 						duration = saberTrail->duration/2.0f; // stay around twice as long
 						VectorSet( rgb1, 32.0f, 32.0f, 32.0f ); // make the sith sword trail pretty faint
 					}
-					else if ( SABER_BLACK )
+					else if( client->ps.saber[saberNum].blade[bladeNum].color == SABER_BLACK )
 					{
 						fx->mShader = cgs.media.blackSaberBlurShader;
 						duration = saberTrail->duration/5.0f;
