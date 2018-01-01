@@ -201,6 +201,7 @@ void G_ClassSetDontFlee( gentity_t *self )
 	case CLASS_MURJJ:
 	case CLASS_PROBE:			// droid
 	case CLASS_REBORN:
+	case CLASS_CLONETROOPER:
 	case CLASS_REELO:
 	case CLASS_REMOTE:
 	case CLASS_SEEKER:			// droid
@@ -210,6 +211,7 @@ void G_ClassSetDontFlee( gentity_t *self )
 	case CLASS_TAVION:
 	case CLASS_ALORA:
 	case CLASS_BOBAFETT:
+	case CLASS_MANDALORIAN:
 	case CLASS_SABER_DROID:
 	case CLASS_ASSASSIN_DROID:
 	case CLASS_PLAYER:
@@ -276,6 +278,13 @@ void NPC_SetMiscDefaultData( gentity_t *ent )
 		ent->client->ps.forcePower	= 100;
 		ent->NPC->scriptFlags		|= (SCF_NAV_CAN_FLY|SCF_FLY_WITH_JET|SCF_NAV_CAN_JUMP);
 		NPC->flags					|= FL_UNDYING;		// Can't Kill Boba
+	}
+	else if (ent->client->NPC_class == CLASS_MANDALORIAN)
+	{//set some stuff, precache
+		ent->client->ps.forcePowersKnown |= (1 << FP_LEVITATION);
+		ent->client->ps.forcePowerLevel[FP_LEVITATION] = FORCE_LEVEL_3;
+		ent->client->ps.forcePower = 100;
+		ent->NPC->scriptFlags |= (SCF_NAV_CAN_FLY | SCF_FLY_WITH_JET | SCF_NAV_CAN_JUMP);
 	}
 	else if ( ent->client->NPC_class == CLASS_ROCKETTROOPER )
 	{//set some stuff, precache
@@ -457,6 +466,12 @@ void NPC_SetMiscDefaultData( gentity_t *ent )
 			{
 			case WP_BRYAR_PISTOL://FIXME: new weapon: imp blaster pistol
 			case WP_BLASTER_PISTOL:
+				if (ent->client->NPC_class == CLASS_REBORN || ent->client->NPC_class == CLASS_CLONETROOPER
+					&& ent->NPC->rank >= RANK_LT_COMM
+					&& (!(ent->NPC->aiFlags&NPCAI_MATCHPLAYERWEAPON) || !ent->weaponModel[0]))//they do this themselves
+				{//dual blaster pistols, so add the left-hand one, too
+					G_CreateG2AttachedWeaponModel(ent, weaponData[ent->client->ps.weapon].weaponMdl, ent->handLBolt, 1);
+				}
 			case WP_DISRUPTOR:
 			case WP_BOWCASTER:
 			case WP_REPEATER:
@@ -560,7 +575,7 @@ void NPC_SetMiscDefaultData( gentity_t *ent )
 					break;
 				case WP_BLASTER_PISTOL:
 					NPCInfo->scriptFlags |= SCF_PILOT;
-					if ( ent->client->NPC_class == CLASS_REBORN
+					if ( ent->client->NPC_class == CLASS_REBORN || ent->client->NPC_class == CLASS_CLONETROOPER
 						&& ent->NPC->rank >= RANK_LT_COMM
 						&& (!(ent->NPC->aiFlags&NPCAI_MATCHPLAYERWEAPON)||!ent->weaponModel[0]) )//they do this themselves
 					{//dual blaster pistols, so add the left-hand one, too
@@ -648,6 +663,7 @@ void NPC_SetMiscDefaultData( gentity_t *ent )
 		ent->client->NPC_class==CLASS_GLIDER ||
 		ent->client->NPC_class==CLASS_IMPWORKER ||
 		ent->client->NPC_class==CLASS_BOBAFETT ||
+		ent->client->NPC_class==CLASS_MANDALORIAN ||
 		ent->client->NPC_class==CLASS_ROCKETTROOPER
 		)
 	{
@@ -1042,7 +1058,7 @@ void NPC_Begin (gentity_t *ent)
 	else if ( ent->NPC->stats.health )	// Was health supplied in NPC.cfg?
 	{
 
-		if ( ent->client->NPC_class != CLASS_REBORN
+		if ( ent->client->NPC_class != CLASS_REBORN && ent->client->NPC_class != CLASS_CLONETROOPER
 			&& ent->client->NPC_class != CLASS_SHADOWTROOPER
 			//&& ent->client->NPC_class != CLASS_TAVION
 			//&& ent->client->NPC_class != CLASS_DESANN
@@ -1114,7 +1130,7 @@ void NPC_Begin (gentity_t *ent)
 			break;
 		}
 	}
-	else if ( ent->client->NPC_class == CLASS_REBORN
+	else if ( ent->client->NPC_class == CLASS_REBORN || ent->client->NPC_class == CLASS_CLONETROOPER
 		|| ent->client->NPC_class == CLASS_SHADOWTROOPER )
 	{
 		switch ( g_spskill->integer )

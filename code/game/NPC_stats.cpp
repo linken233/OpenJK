@@ -176,6 +176,8 @@ stringID_table_t ClassTable[] =
 	ENUM2STRING(CLASS_ASSASSIN_DROID),
 	ENUM2STRING(CLASS_HAZARD_TROOPER),
 	ENUM2STRING(CLASS_VEHICLE),
+	ENUM2STRING(CLASS_MANDALORIAN),
+	ENUM2STRING(CLASS_CLONETROOPER),
 	{ "",	-1 }
 };
 
@@ -305,6 +307,10 @@ saber_colors_t TranslateSaberColor( const char *name )
 	if ( !Q_stricmp( name, "random" ) )
 	{
 		return ((saber_colors_t)(Q_irand( SABER_ORANGE, SABER_PURPLE )));
+	}
+	if (!Q_stricmp(name, "prequel_random"))
+	{
+		return ((saber_colors_t)(Q_irand(SABER_GREEN, SABER_BLUE)));
 	}
 	float colors[3];
 	Q_parseSaberColor(name, colors);
