@@ -285,6 +285,12 @@ void NPC_SetMiscDefaultData( gentity_t *ent )
 		ent->client->ps.forcePower = 100;
 		ent->NPC->scriptFlags |= (SCF_NAV_CAN_FLY | SCF_FLY_WITH_JET | SCF_NAV_CAN_JUMP);
 	}
+	else if (NPC->client->ps.weapon == WP_CLONECARBINE || NPC->client->ps.weapon == WP_CLONERIFLE ||
+		NPC->client->ps.weapon == WP_CLONECOMMANDO || NPC->client->ps.weapon == WP_REBELBLASTER ||
+		NPC->client->ps.weapon == WP_REBELRIFLE)
+	{
+		ent->NPC->scriptFlags |= (SCF_ALT_FIRE | SCF_CHASE_ENEMIES);
+	}
 	else if ( ent->client->NPC_class == CLASS_ROCKETTROOPER )
 	{//set some stuff, precache
 		ent->client->ps.forcePowersKnown |= ( 1 << FP_LEVITATION );
