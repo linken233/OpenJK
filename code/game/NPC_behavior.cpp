@@ -1449,7 +1449,6 @@ qboolean NPC_CanSurrender( void )
 		case CLASS_R2D2:				// droid
 		case CLASS_R5D2:				// droid
 		case CLASS_REBORN:
-		case CLASS_CLONETROOPER:
 		case CLASS_REELO:
 		case CLASS_REMOTE:
 		case CLASS_SEEKER:			// droid

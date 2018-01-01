@@ -2579,7 +2579,7 @@ void NPC_BSST_Attack( void )
 		TIMER_Set( NPC, "duck", -1 );
 	}
 
-	if ( NPC->client->NPC_class == CLASS_REBORN || NPC->client->NPC_class == CLASS_CLONETROOPER//cultist using a gun
+	if ( NPC->client->NPC_class == CLASS_REBORN//cultist using a gun
 		&& NPCInfo->rank >= RANK_LT_COMM //commando or better
 		&& NPC->enemy->s.weapon == WP_SABER )//fighting a saber-user
 	{//commando saboteur vs. jedi/reborn
