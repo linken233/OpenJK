@@ -1630,7 +1630,7 @@ qboolean JET_Flying( gentity_t *self )
 	{
 		return qfalse;
 	}
-	if ( self->client->NPC_class == CLASS_BOBAFETT )
+	if (self->client->NPC_class == CLASS_BOBAFETT || self->client->NPC_class == CLASS_MANDALORIAN)
 	{
 		return (Boba_Flying(self));
 	}
@@ -1651,7 +1651,7 @@ void JET_FlyStart( gentity_t *self )
 		return;
 	}
 	self->lastInAirTime = level.time;
-	if ( self->client->NPC_class == CLASS_BOBAFETT )
+	if (self->client->NPC_class == CLASS_BOBAFETT || self->client->NPC_class == CLASS_MANDALORIAN)
 	{
 		Boba_FlyStart( self );
 	}
@@ -1667,7 +1667,7 @@ void JET_FlyStop( gentity_t *self )
 	{
 		return;
 	}
-	if ( self->client->NPC_class == CLASS_BOBAFETT )
+	if (self->client->NPC_class == CLASS_BOBAFETT || self->client->NPC_class == CLASS_MANDALORIAN)
 	{
 		Boba_FlyStop( self );
 	}

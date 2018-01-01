@@ -296,7 +296,7 @@ void Boba_ChangeWeapon( int wp )
 ////////////////////////////////////////////////////////////////////////////////////////
 qboolean Boba_StopKnockdown( gentity_t *self, gentity_t *pusher, const vec3_t pushDir, qboolean forceKnockdown )
 {
-	if ( self->client->NPC_class != CLASS_BOBAFETT )
+	if (self->client->NPC_class != CLASS_BOBAFETT && self->client->NPC_class != CLASS_MANDALORIAN)
 	{
 		return qfalse;
 	}
@@ -369,7 +369,7 @@ qboolean Boba_StopKnockdown( gentity_t *self, gentity_t *pusher, const vec3_t pu
 ////////////////////////////////////////////////////////////////////////////////////////
 qboolean Boba_Flying( gentity_t *self )
 {
-	assert(self && self->client && self->client->NPC_class==CLASS_BOBAFETT);//self->NPC &&
+	assert(self && self->client && (self->client->NPC_class == CLASS_BOBAFETT || self->client->NPC_class == CLASS_MANDALORIAN));//self->NPC &&
 	return ((qboolean)(self->client->moveType==MT_FLYSWIM));
 }
 
@@ -378,7 +378,7 @@ qboolean Boba_Flying( gentity_t *self )
 ////////////////////////////////////////////////////////////////////////////////////////
 bool	Boba_CanSeeEnemy( gentity_t *self )
 {
-	assert(self && self->NPC && self->client && self->client->NPC_class==CLASS_BOBAFETT);
+	assert(self && self->NPC && self->client && (self->client->NPC_class == CLASS_BOBAFETT || self->client->NPC_class == CLASS_MANDALORIAN));
  	return ((level.time - self->NPC->enemyLastSeenTime)<1000);
 }
 
@@ -724,7 +724,7 @@ void Boba_FireDecide( void )
 	//--------------------------
 	if (!NPC ||											// Only NPCs
 		!NPC->client ||									// Only Clients
-		 NPC->client->NPC_class!=CLASS_BOBAFETT ||		// Only Boba
+		(NPC->client->NPC_class != CLASS_BOBAFETT || NPC->client->NPC_class == CLASS_MANDALORIAN) ||		// Only Boba
 		!NPC->enemy ||									// Only If There Is An Enemy
 		 NPC->s.weapon==WP_NONE ||						// Only If Using A Valid Weapon
 		!TIMER_Done(NPC, "nextAttackDelay") ||			// Only If Ready To Shoot Again
@@ -1018,7 +1018,7 @@ void	Boba_Update()
 {
 	// Never Forget The Player... Never.
 	//-----------------------------------
-	if (player && player->inuse && !NPC->enemy)
+	if (player && player->inuse && !NPC->enemy && NPC->client->NPC_class != CLASS_MANDALORIAN)
 	{
 		G_SetEnemy(NPC, player);
 		NPC->svFlags				|= SVF_LOCKEDENEMY;	// Don't forget about the enemy once you've found him
