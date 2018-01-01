@@ -1460,6 +1460,7 @@ qboolean NPC_CanSurrender( void )
 		case CLASS_TUSKEN:
 		case CLASS_BOBAFETT:
 		case CLASS_MANDALORIAN:
+		case CLASS_JANGO:
 		case CLASS_ROCKETTROOPER:
 		case CLASS_SABER_DROID:
 		case CLASS_ASSASSIN_DROID:
