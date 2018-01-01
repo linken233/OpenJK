@@ -286,8 +286,7 @@ void NPC_SetMiscDefaultData( gentity_t *ent )
 		ent->NPC->scriptFlags |= (SCF_NAV_CAN_FLY | SCF_FLY_WITH_JET | SCF_NAV_CAN_JUMP);
 	}
 	else if (NPC->client->ps.weapon == WP_CLONECARBINE || NPC->client->ps.weapon == WP_CLONERIFLE ||
-		NPC->client->ps.weapon == WP_CLONECOMMANDO || NPC->client->ps.weapon == WP_REBELBLASTER ||
-		NPC->client->ps.weapon == WP_REBELRIFLE)
+		NPC->client->ps.weapon == WP_CLONECOMMANDO || NPC->client->ps.weapon == WP_REBELRIFLE)
 	{
 		ent->NPC->scriptFlags |= (SCF_ALT_FIRE | SCF_CHASE_ENEMIES);
 	}
@@ -478,6 +477,7 @@ void NPC_SetMiscDefaultData( gentity_t *ent )
 				{//dual blaster pistols, so add the left-hand one, too
 					G_CreateG2AttachedWeaponModel(ent, weaponData[ent->client->ps.weapon].weaponMdl, ent->handLBolt, 1);
 				}
+				break;
 			case WP_DISRUPTOR:
 			case WP_BOWCASTER:
 			case WP_REPEATER:
