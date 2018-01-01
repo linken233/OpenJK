@@ -793,7 +793,7 @@ typedef enum
 #define	MAX_POWERUPS			16
 #define	MAX_WEAPONS				64
 #define MAX_WEAPONBITS			1 + (MAX_WEAPONS - 1)/32
-#define MAX_AMMO				10		
+#define MAX_AMMO				10
 #define MAX_INVENTORY			15		// See INV_MAX
 #define MAX_SECURITY_KEYS		5
 #define MAX_SECURITY_KEY_MESSSAGE		24
@@ -841,7 +841,9 @@ typedef struct
 		saved_game.write<int32_t>(duration);
 		saved_game.write<int32_t>(lastTime);
 		saved_game.write<float>(base);
+		saved_game.write<float>(dualbase);
 		saved_game.write<float>(tip);
+		saved_game.write<float>(dualtip);
 		saved_game.write<int32_t>(haveOldPos);
 		saved_game.write<float>(oldPos);
 		saved_game.write<float>(oldNormal);
@@ -854,7 +856,9 @@ typedef struct
 		saved_game.read<int32_t>(duration);
 		saved_game.read<int32_t>(lastTime);
 		saved_game.read<float>(base);
+		saved_game.read<float>(dualbase);
 		saved_game.read<float>(tip);
+		saved_game.read<float>(dualtip);
 		saved_game.read<int32_t>(haveOldPos);
 		saved_game.read<float>(oldPos);
 		saved_game.read<float>(oldNormal);
@@ -2120,7 +2124,7 @@ public:
 		saved_game.read<int32_t>(ammo);
 		saved_game.read<int32_t>(inventory);
 		saved_game.read<int8_t>(security_key_message);
-		saved_game.write<int8_t>(weapons);
+		saved_game.read<int8_t>(weapons);
 		saved_game.read<float>(serverViewOrg);
 		saved_game.read<int32_t>(saberInFlight);
 
