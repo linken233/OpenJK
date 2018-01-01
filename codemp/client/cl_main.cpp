@@ -2360,7 +2360,7 @@ static IHeapAllocator *GetG2VertSpaceServer( void ) {
 	return G2VertSpaceServer;
 }
 
-#define DEFAULT_RENDER_LIBRARY "rd-vanilla"
+#define DEFAULT_RENDER_LIBRARY "kotf-2.1mp-vanilla"
 
 void CL_InitRef( void ) {
 	static refimport_t ri;
