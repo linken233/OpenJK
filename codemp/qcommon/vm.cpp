@@ -30,9 +30,9 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 vm_t *currentVM = NULL;
 
 static const char *vmNames[MAX_VM] = {
-	"kotf-2.1mpgame",
-	"kotf-2.1mpcgame",
-	"kotf-2.1mpui"
+	"jampgame",
+	"cgame",
+	"ui"
 };
 
 const char *vmStrs[MAX_VM] = {

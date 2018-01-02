@@ -1074,7 +1074,7 @@ static CMiniHeap *GetG2VertSpaceServer( void ) {
 #ifdef JK2_MODE
 #define DEFAULT_RENDER_LIBRARY	"rdjosp-vanilla"
 #else
-#define DEFAULT_RENDER_LIBRARY	"kotf-2.1sp-vanilla"
+#define DEFAULT_RENDER_LIBRARY	"rdsp_kotf"
 #endif
 
 void CL_InitRef( void ) {
