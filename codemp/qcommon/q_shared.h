@@ -358,9 +358,6 @@ typedef enum
 	SABER_GREEN,
 	SABER_BLUE,
 	SABER_PURPLE,
-	SABER_RGB,
-	SABER_UNSTABLE_RED,
-	SABER_BLACK,
 	NUM_SABER_COLORS
 } saber_colors_t;
 
@@ -1041,7 +1038,7 @@ typedef enum {
 #define	MAX_STATS				16
 #define	MAX_PERSISTANT			16
 #define	MAX_POWERUPS			16
-#define	MAX_WEAPONS				32
+#define	MAX_WEAPONS				19
 #define MAX_AMMO_TRANSMIT		16 // This is needed because the ammo array is 19 but only 16 sized array is networked
 #define MAX_AMMO				MAX_WEAPONS
 
