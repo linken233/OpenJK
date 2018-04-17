@@ -322,12 +322,13 @@ int UI_ParseAnimationFile(const char *filename, animation_t *animset, qboolean i
 	if (!UIPAFtextLoaded || !isHumanoid)
 	{ //rww - We are always using the same animation config now. So only load it once.
 		len = trap->FS_Open( filename, &f, FS_READ );
-		if ( !f ) {
+		if ( (len <= 0) || (len >= sizeof( UIPAFtext ) - 1) )
+		{
+			if (len > 0)
+			{
+				Com_Error(ERR_DROP, "%s exceeds the allowed ui-side animation buffer!", filename);
+			}
 			return -1;
-		}
-		if ( len >= sizeof( UIPAFtext ) - 1 ) {
-			trap->FS_Close( f );
-			Com_Error(ERR_DROP, "%s exceeds the allowed ui-side animation buffer!", filename);
 		}
 
 		trap->FS_Read( UIPAFtext, len, f );
@@ -7124,11 +7125,8 @@ void UI_SetSiegeTeams(void)
 
 	len = trap->FS_Open(levelname, &f, FS_READ);
 
-	if (!f) {
-		return;
-	}
-	if (len >= MAX_SIEGE_INFO_SIZE) {
-		trap->FS_Close( f );
+	if (!f || len >= MAX_SIEGE_INFO_SIZE)
+	{
 		return;
 	}
 
@@ -9705,7 +9703,6 @@ static void UI_BuildPlayerModel_List( qboolean inGameLoad )
 			buffer = malloc(filelen + 1);
 			if(!buffer)
 			{
-				trap->FS_Close( f );
 				Com_Error(ERR_FATAL, "Could not allocate buffer to read %s", fpath);
 			}
 

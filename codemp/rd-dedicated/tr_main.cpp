@@ -27,7 +27,7 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 
 trGlobals_t		tr;
 
-refimport_t	ri;
+refimport_t	*ri = NULL;
 
 void R_AddTerrainSurfaces(void);
 

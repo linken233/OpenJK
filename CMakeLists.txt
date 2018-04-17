@@ -136,16 +136,14 @@ else()
 	endif()
 endif()
 
-message(STATUS "Architecture is ${Architecture}")
+message("Architecture is ${Architecture}")
 
-if(WIN32 AND CMAKE_VERSION VERSION_LESS "3.4")
-message(WARNING "Building on Windows platform with CMake version less than 3.4 is deprecated. Manifest file will fail to be included.")
-endif()
+
 
 # Current Git SHA1 hash
 include(GetGitRevisionDescription)
 get_git_head_revision(GIT_REFSPEC GIT_SHA1)
-message(STATUS "Git revision is ${GIT_SHA1}")
+message("Git revision is ${GIT_SHA1}")
 
 
 
@@ -213,7 +211,7 @@ if(MSVC)
 	# We don't try to control symbol visibility under MSVC.
 	set(OPENJK_VISIBILITY_FLAGS "")
 
-elseif (("${CMAKE_C_COMPILER_ID}" STREQUAL "GNU") OR ("${CMAKE_C_COMPILER_ID}" MATCHES "Clang"))
+elseif (("${CMAKE_C_COMPILER_ID}" STREQUAL "GNU") OR ("${CMAKE_C_COMPILER_ID}" STREQUAL "Clang"))
 	# I hope this doesn't come back to bite me in the butt later on.
 	# Realistically though, can the C and CXX compilers be different?
 
@@ -262,7 +260,7 @@ elseif (("${CMAKE_C_COMPILER_ID}" STREQUAL "GNU") OR ("${CMAKE_C_COMPILER_ID}" M
 			set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static-libgcc")
 			set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static-libstdc++")
 		endif()
-	elseif("${CMAKE_C_COMPILER_ID}" MATCHES "Clang")
+	elseif("${CMAKE_C_COMPILER_ID}" STREQUAL "Clang")
 		set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall")
 		set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-comment")
 	endif()
@@ -277,7 +275,7 @@ elseif (("${CMAKE_C_COMPILER_ID}" STREQUAL "GNU") OR ("${CMAKE_C_COMPILER_ID}" M
 			set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mstackrealign")
 			set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mfpmath=sse")
 		endif()
-	elseif("${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang")
+	elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
 		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
 		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-write-strings")
 		#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated-writable-strings")
@@ -289,7 +287,7 @@ else()
 endif()
 
 if (NOT CMAKE_BUILD_TYPE)
-	message(STATUS "No build type selected, default to RELEASE")
+	message("No build type selected, default to RELEASE")
 	set(CMAKE_BUILD_TYPE "RELEASE")
 endif()
 

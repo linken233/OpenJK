@@ -196,9 +196,9 @@ void G_Give( gentity_t *ent, const char *name, const char *args, int argc )
 	if ( give_all || !Q_stricmp( name, "force" ) )
 	{
 		if ( argc == 3 )
-			ent->client->ps.forcePower = Com_Clampi( 0, ent->client->ps.forcePowerMax, atoi( args ) );
+			ent->client->ps.forcePower = Com_Clampi( 0, FORCE_POWER_MAX, atoi( args ) );
 		else
-			ent->client->ps.forcePower = ent->client->ps.forcePowerMax;
+			ent->client->ps.forcePower = FORCE_POWER_MAX;
 
 		if ( !give_all )
 			return;

@@ -3339,12 +3339,12 @@ void CL_GlobalServers_f( void ) {
 		return;
 	}
 
-	Com_sprintf( command, sizeof(command), "sv_master%d", masterNum );
+	Com_sprintf( command, sizeof(command), "sv_master%d", masterNum + 1 );
 	masteraddress = Cvar_VariableString( command );
 
 	if ( !*masteraddress )
 	{
-		Com_Printf( "CL_GlobalServers_f: Error: No master server address given for %s.\n", command );
+		Com_Printf( "CL_GlobalServers_f: Error: No master server address given.\n" );
 		return;
 	}
 

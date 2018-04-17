@@ -188,11 +188,8 @@ void CG_InitSiegeMode(void)
 
 	len = trap->FS_Open(levelname, &f, FS_READ);
 
-	if ( !f ) {
-		goto failure;
-	}
-	if ( len >= MAX_SIEGE_INFO_SIZE ) {
-		trap->FS_Close( f );
+	if (!f || len >= MAX_SIEGE_INFO_SIZE)
+	{
 		goto failure;
 	}
 
