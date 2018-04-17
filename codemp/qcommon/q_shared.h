@@ -27,16 +27,16 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 // q_shared.h -- included first by ALL program modules.
 // A user mod should never modify this file
 
-#define PRODUCT_NAME			"openjk"
+#define PRODUCT_NAME			"KotFMPconfig"
 
-#define CLIENT_WINDOW_TITLE "OpenJK (MP)"
-#define CLIENT_CONSOLE_TITLE "OpenJK Console (MP)"
-#define HOMEPATH_NAME_UNIX "openjk"
-#define HOMEPATH_NAME_WIN "OpenJK"
+#define CLIENT_WINDOW_TITLE "Knights of the Force 2.1 MP"
+#define CLIENT_CONSOLE_TITLE "Knights of the Force 2.1 MP Console"
+#define HOMEPATH_NAME_UNIX "KotF"
+#define HOMEPATH_NAME_WIN "KotF 2.1"
 #define HOMEPATH_NAME_MACOSX HOMEPATH_NAME_WIN
 
 #define	BASEGAME "base"
-#define OPENJKGAME "OpenJK"
+#define OPENJKGAME "KotF"
 
 //NOTENOTE: Only change this to re-point ICARUS to a new script directory
 #define Q3_SCRIPT_DIR	"scripts"
@@ -358,6 +358,9 @@ typedef enum
 	SABER_GREEN,
 	SABER_BLUE,
 	SABER_PURPLE,
+	SABER_RGB,
+	SABER_UNSTABLE_RED,
+	SABER_BLACK,
 	NUM_SABER_COLORS
 } saber_colors_t;
 
@@ -1038,7 +1041,7 @@ typedef enum {
 #define	MAX_STATS				16
 #define	MAX_PERSISTANT			16
 #define	MAX_POWERUPS			16
-#define	MAX_WEAPONS				19
+#define	MAX_WEAPONS				32
 #define MAX_AMMO_TRANSMIT		16 // This is needed because the ammo array is 19 but only 16 sized array is networked
 #define MAX_AMMO				MAX_WEAPONS
 
