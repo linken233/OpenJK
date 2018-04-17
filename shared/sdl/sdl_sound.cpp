@@ -30,6 +30,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "client/snd_local.h"
 
 extern dma_t		dma;
+SDL_AudioDeviceID	dev;
 qboolean snd_inited = qfalse;
 
 cvar_t *s_sdlBits;
@@ -85,8 +86,8 @@ static void SNDDMA_AudioCallback(void *userdata, Uint8 *stream, int len)
 
 static struct
 {
-	Uint16	enumFormat;
-	char		*stringFormat;
+	Uint16		enumFormat;
+	const char	*stringFormat;
 } formatToStringTable[ ] =
 {
 	{ AUDIO_U8,     "AUDIO_U8" },
@@ -94,10 +95,14 @@ static struct
 	{ AUDIO_U16LSB, "AUDIO_U16LSB" },
 	{ AUDIO_S16LSB, "AUDIO_S16LSB" },
 	{ AUDIO_U16MSB, "AUDIO_U16MSB" },
-	{ AUDIO_S16MSB, "AUDIO_S16MSB" }
+	{ AUDIO_S16MSB, "AUDIO_S16MSB" },
+	{ AUDIO_S32LSB, "AUDIO_S32LSB" },
+	{ AUDIO_S32MSB, "AUDIO_S32MSB" },
+	{ AUDIO_F32LSB, "AUDIO_F32LSB" },
+	{ AUDIO_F32MSB, "AUDIO_F32MSB" }
 };
 
-static int formatToStringTableSize = ARRAY_LEN( formatToStringTable );
+static const size_t formatToStringTableSize = ARRAY_LEN( formatToStringTable );
 
 /*
 ===============
@@ -106,12 +111,11 @@ SNDDMA_PrintAudiospec
 */
 static void SNDDMA_PrintAudiospec(const char *str, const SDL_AudioSpec *spec)
 {
-	int		i;
-	char	*fmt = NULL;
+	const char	*fmt = NULL;
 
-	Com_Printf("%s:\n", str);
+	Com_Printf( "%s:\n", str );
 
-	for( i = 0; i < formatToStringTableSize; i++ ) {
+	for( size_t i = 0; i < formatToStringTableSize; i++ ) {
 		if( spec->format == formatToStringTable[ i ].enumFormat ) {
 			fmt = formatToStringTable[ i ].stringFormat;
 		}
@@ -120,7 +124,7 @@ static void SNDDMA_PrintAudiospec(const char *str, const SDL_AudioSpec *spec)
 	if( fmt ) {
 		Com_Printf( "  Format:   %s\n", fmt );
 	} else {
-		Com_Printf( "  Format:   " S_COLOR_RED "UNKNOWN\n");
+		Com_Printf( "  Format:   " S_COLOR_RED "UNKNOWN (%d)\n", (int)spec->format);
 	}
 
 	Com_Printf( "  Freq:     %d\n", (int) spec->freq );
@@ -144,7 +148,7 @@ qboolean SNDDMA_Init(void)
 
 	if (!s_sdlBits) {
 		s_sdlBits = Cvar_Get("s_sdlBits", "16", CVAR_ARCHIVE_ND);
-		s_sdlSpeed = Cvar_Get("s_sdlSpeed", "44100", CVAR_ARCHIVE);
+		s_sdlSpeed = Cvar_Get("s_sdlSpeed", "0", CVAR_ARCHIVE);
 		s_sdlChannels = Cvar_Get("s_sdlChannels", "2", CVAR_ARCHIVE_ND);
 		s_sdlDevSamps = Cvar_Get("s_sdlDevSamps", "0", CVAR_ARCHIVE_ND);
 		s_sdlMixSamps = Cvar_Get("s_sdlMixSamps", "0", CVAR_ARCHIVE_ND);
@@ -196,9 +200,10 @@ qboolean SNDDMA_Init(void)
 	desired.channels = (int) s_sdlChannels->value;
 	desired.callback = SNDDMA_AudioCallback;
 
-	if (SDL_OpenAudio(&desired, &obtained) == -1)
+	dev = SDL_OpenAudioDevice( NULL, 0, &desired, &obtained, 0 );
+	if ( !dev )
 	{
-		Com_Printf("SDL_OpenAudio() failed: %s\n", SDL_GetError());
+		Com_Printf("SDL_OpenAudioDevice() failed: %s\n", SDL_GetError());
 		SDL_QuitSubSystem(SDL_INIT_AUDIO);
 		return qfalse;
 	}
@@ -235,7 +240,7 @@ qboolean SNDDMA_Init(void)
 	dma.buffer = (byte *)calloc(1, dmasize);
 
 	Com_Printf("Starting SDL audio callback...\n");
-	SDL_PauseAudio(0);  // start callback.
+	SDL_PauseAudioDevice(dev, 0);  // start callback.
 
 	Com_Printf("SDL audio initialized.\n");
 	snd_inited = qtrue;
@@ -260,8 +265,8 @@ SNDDMA_Shutdown
 void SNDDMA_Shutdown(void)
 {
 	Com_Printf("Closing SDL audio device...\n");
-	SDL_PauseAudio(1);
-	SDL_CloseAudio();
+	SDL_PauseAudioDevice(dev, 1);
+	SDL_CloseAudioDevice(dev);
 	SDL_QuitSubSystem(SDL_INIT_AUDIO);
 	free(dma.buffer);
 	dma.buffer = NULL;
@@ -279,7 +284,7 @@ Send sound to device if buffer isn't really the dma buffer
 */
 void SNDDMA_Submit(void)
 {
-	SDL_UnlockAudio();
+	SDL_UnlockAudioDevice(dev);
 }
 
 /*
@@ -289,7 +294,7 @@ SNDDMA_BeginPainting
 */
 void SNDDMA_BeginPainting (void)
 {
-	SDL_LockAudio();
+	SDL_LockAudioDevice(dev);
 }
 
 #ifdef USE_OPENAL
@@ -311,5 +316,5 @@ void SNDDMA_Activate( qboolean activate )
 		S_ClearSoundBuffer();
 	}
 
-	SDL_PauseAudio( !activate );
+	SDL_PauseAudioDevice( dev, !activate );
 }
